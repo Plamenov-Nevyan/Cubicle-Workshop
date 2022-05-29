@@ -1,9 +1,24 @@
-const cubes = require('../config/database.json')
+let cubes = require('../config/database.json')
 const path = require('path')
 const fs = require('fs/promises')
 const idGenerator = require('uniqid')
 
-const getAllCubes = () => cubes
+const getAllCubes = (searchValues) => {
+    if(!searchValues){return cubes}
+    else{
+        let cubesForFilter = cubes.slice(0)
+        if(searchValues.search){
+            cubesForFilter = cubes.filter(cube => cube.name.toLowerCase().includes(searchValues.search.toLowerCase()))
+         }
+         else if(searchValues.from && searchValues.to){
+             cubesForFilter = cubes
+             .filter(cube => Number(cube.difficultyLevel) >= Number(searchValues.from))
+             .filter(cube => Number(cube.difficultyLevel) <= Number(searchValues.to))
+
+         }
+         return cubesForFilter
+      }
+    }
 
 const getSpecificCube = (cubeId) => cubes.find(cube => cube.id == cubeId)
 
