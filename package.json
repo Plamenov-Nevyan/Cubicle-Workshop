@@ -1,0 +1,32 @@
+{
+  "name": "name",
+  "description": "description",
+  "authors": "author",
+  "version": "1.0.0",
+  "main": "pathToMain",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^6.0.6",
+    "uniqid": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/express-handlebars": "^6.0.0",
+    "nodemon": "^1.19.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Plamenov-Nevyan/Cubicle-Workshop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Plamenov-Nevyan/Cubicle-Workshop/issues"
+  },
+  "homepage": "https://github.com/Plamenov-Nevyan/Cubicle-Workshop#readme"
+}
