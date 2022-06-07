@@ -26,3 +26,6 @@ const accesorySchema = mongoose.Schema({
         ref: 'Cube'
     }]
 })
+
+const Accessory = mongoose.model('Accessory', accesorySchema)
+exports.Accessory = Accessory

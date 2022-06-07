@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cubeSchema = new mongoose.Schema({
     name: {
         type: String,
+        required:true
     },
     description: {
         type: String,
@@ -14,18 +15,19 @@ const cubeSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator : function(){
-                return /^https?$/.test(this.imageUrl)
+                return /^http/.test(this.imageUrl)
             },
             message: props => `This image link is invalid`,
             required: [true, `Make sure the image link is correct !`]
         },
     },
     difficultyLevel: {
+        type: Number,
         required: true, 
         min: 1,
         max: 6
     },
-    accesories: [{
+    accessories: [{
         type: mongoose.Types.ObjectId,
         ref: 'Accessory'
     }]

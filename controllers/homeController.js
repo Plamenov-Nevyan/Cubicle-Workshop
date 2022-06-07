@@ -6,8 +6,10 @@ router.get('/', (req, res) => {
     if(Object.values(req.query).length > 0){
         searchValues = {...req.query}
     }
-    let cubes = services.getAllCubes(searchValues)
-    res.render('index',{cubes})
+    services.getAllCubes(searchValues)
+    .then((cubes) => {res.render('index',{cubes})})
+    .catch(err => {throw new Error(err.message)})
+    
    
 })
 

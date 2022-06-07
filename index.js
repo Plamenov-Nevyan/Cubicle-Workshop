@@ -2,7 +2,7 @@ const env = process.env.NODE_ENV || 'development';
 let routes = require('./config/routes')
 const config = require('./config/config')[env];
 const app = require('express')();
-const databaseInit = require('./config/mongodb')
+const {databaseInit} = require('./config/mongodb')
 
 require('./config/express')(app);
 
