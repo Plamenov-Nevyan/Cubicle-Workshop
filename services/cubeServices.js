@@ -9,19 +9,19 @@ const getAllCubes = (searchValues) => {
     if(!searchValues){
         return Cube.find().lean()
     }
-    // else{
-    //     let cubesForFilter = cubes.slice(0)
-    //     if(searchValues.search){
-    //         cubesForFilter = cubes.filter(cube => cube.name.toLowerCase().includes(searchValues.search.toLowerCase()))
-    //      }
-    //      else if(searchValues.from && searchValues.to){
-    //          cubesForFilter = cubes
-    //          .filter(cube => Number(cube.difficultyLevel) >= Number(searchValues.from))
-    //          .filter(cube => Number(cube.difficultyLevel) <= Number(searchValues.to))
-
-    //      }
-    //      return cubesForFilter
-    //   }
+    else{
+        let cubesForFilter 
+        if(searchValues.search){
+            return cubesForFilter = Cube.find({
+                name: {$regex: new RegExp(searchValues.search, 'i')}
+            }).lean()
+         }
+         else if(searchValues.from && searchValues.to){
+            return Cube.find().where('difficultyLevel').gte(searchValues.from).lte(searchValues.to).lean()
+         }
+         else{return Cube.find().lean()
+        }
+      }
     }
 
 const getSpecificCube = (cubeId) => Cube.findOne({_id:cubeId}).lean()

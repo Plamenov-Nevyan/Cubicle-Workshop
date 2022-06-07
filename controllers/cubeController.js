@@ -12,7 +12,7 @@ router.post('/create', (req, res) => {
 
 router.get('/details/:cubeId', (req, res) => {
     services.getSpecificCube(req.params.cubeId)
-    .then((cube) => {console.log(cube); res.render('details', {cube})})
+    .then((cube) =>res.render('details', {cube}))
     .catch(err => {throw new Error(err.message)})
 })
 
