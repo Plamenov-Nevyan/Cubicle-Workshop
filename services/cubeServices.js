@@ -1,16 +1,10 @@
-let cubes = require('../config/database.json')
 const { Cube } = require('../models/Cube')
-const { Accesory } = require('../models/Accesory')
-const path = require('path')
-const fs = require('fs/promises')
-const idGenerator = require('uniqid')
 
 const getAllCubes = (searchValues) => {
     if(!searchValues){
         return Cube.find().lean()
     }
     else{
-        let cubesForFilter 
         if(searchValues.search){
             return cubesForFilter = Cube.find({
                 name: {$regex: new RegExp(searchValues.search, 'i')}
@@ -24,13 +18,16 @@ const getAllCubes = (searchValues) => {
       }
     }
 
-const getSpecificCube = (cubeId) => Cube.findOne({_id:cubeId}).lean()
+const getSpecificCube = (cubeId) =>Cube.findById(cubeId).lean()
+
+const getCubeWithAccessories = (cubeId) => Cube.findById(cubeId).populate('accessories').lean()
 
 const saveCube = (data) => Cube.create(data)
 
 
-module.exports = {
+exports.cubeServices = {
     getAllCubes,
     getSpecificCube,
-    saveCube
+    saveCube,
+    getCubeWithAccessories
 }

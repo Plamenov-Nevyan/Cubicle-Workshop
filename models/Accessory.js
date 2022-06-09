@@ -10,7 +10,7 @@ const accesorySchema = mongoose.Schema({
         required: true,
         validate: {
             validator : function(){
-                return /^https?$/.test(this.imageUrl)
+                return /^http/.test(this.imageUrl)
             },
             message: props => `This image link is invalid`,
             required: [true, `Make sure the image link is correct !`]
@@ -19,7 +19,7 @@ const accesorySchema = mongoose.Schema({
     description: {
         type: String,
         required: true,
-        maxlength: 100
+        maxlength: 200
     },
     cubes: [{
         type: mongoose.Types.ObjectId,
