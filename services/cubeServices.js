@@ -45,6 +45,7 @@ switch(cubeDifLevel){
 
 const editCube = (cubeId, data) => Cube.findByIdAndUpdate({_id:cubeId}, data)
 
+const deleteCube = (cubeId) => Cube.findByIdAndRemove(cubeId)
 
 exports.cubeServices = {
     getAllCubes,
@@ -52,5 +53,6 @@ exports.cubeServices = {
     saveCube,
     getCubeWithAccessories,
     getDifficultyLevel,
-    editCube
+    editCube,
+    deleteCube
 }

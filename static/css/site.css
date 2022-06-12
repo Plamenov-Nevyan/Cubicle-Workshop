@@ -28,6 +28,11 @@ img.logo {
     float: left;
 }
 
+.deleteBtnImg {
+    width: 20px;
+    height: 20px;
+}
+
 header {
     list-style-type: none;
     margin: auto;
@@ -102,6 +107,19 @@ button, main a.btn {
     margin: 12px;
     border-radius: 4px;
     background: #607588;
+    color: white;
+}
+
+.deleteBtn {
+    border: none;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 5%;
+    margin: 12px;
+    border-radius: 4px;
+    background: crimson;
     color: white;
 }
 

@@ -31,4 +31,10 @@ router.post('/edit/:cubeId', (req, res) => {
     .catch(err => {throw new Error(err.message)})
 })
 
+router.get('/delete/:cubeId', (req, res) => {
+  cubeServices.deleteCube(req.params.cubeId)
+  .then(() => res.redirect('/'))
+  .catch(err => {throw new Error(err.message)})
+})
+
 module.exports = router
