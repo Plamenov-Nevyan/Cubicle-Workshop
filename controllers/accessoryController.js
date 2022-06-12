@@ -29,4 +29,15 @@ router.post('/add', (req, res) => {
     .catch(err => {throw new Error(err.message)})
 })
 
+router.get('/remove/:cubeId', (req, res) => {
+   cubeServices.getCubeWithAccessories(req.params.cubeId)
+   .then((cube) => res.render('removeAccessory', {cube}))
+   .catch(err => {throw new Error(err.message)}) 
+})
+router.post('/remove/:cubeId', (req, res) =>{
+    accessoryServices.removeAccessory(req.body.accessory, req.params.cubeId)
+    .then(() => res.redirect(`/cube/details/${req.params.cubeId}`))
+    .catch(err => {throw new Error(err.message)})
+})
+
 module.exports = router

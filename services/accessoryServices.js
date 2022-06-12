@@ -26,10 +26,18 @@ const saveAccessory = async (cubeId, accessoryId) => {
 return cube
 }
 
+const removeAccessory = async(accessoryId, cubeId) => {
+  let cube = await Cube.findById(cubeId)
+  let indexOfAccessory = cube.accessories.indexOf(accessoryId)
+  cube.accessories.splice(indexOfAccessory,1)
+  await cube.save()
+}
+
 exports.accessoryServices = {
     getAllAccessories,
     createAccessory,
     getAllAvailableForCube,
     getOne,
-    saveAccessory
+    saveAccessory,
+    removeAccessory
 }
