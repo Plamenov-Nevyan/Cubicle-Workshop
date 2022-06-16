@@ -15,7 +15,7 @@ router.post('/login', async (req, res) => {
     let responseData = await authServices.checkIfPasswordExist(req.body)
 
     if(typeof responseData == `string`){return res.render('404', {status:`401 - Unauthorized`, message:`${responseData}`})}
-    
+
     if(responseData.isAuthenticated){
         let token = jwt.sign({username:responseData.username, _id:responseData._id}, secret, {expiresIn:'2d'})
         res.cookie(cookieName,token,{httpOnly:true})
@@ -51,6 +51,11 @@ router.post('/register', (req, res) => {
          }
       })
       .catch(err => res.render('404', {status:'500 - Internal Server Error', message:`${err.message}`}))
+})
+
+router.get('/logout', (req, res) => {
+    res.clearCookie(cookieName)
+    res.redirect('/')
 })
 
 module.exports = router
