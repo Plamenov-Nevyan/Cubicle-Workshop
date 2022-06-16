@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
         jwt.verify(token, secret, (err, decodedToken) => {
             if(err){return res.render('404', {status:`402 - Forbidden`, message: `Invalid access token`})}
             req.user = decodedToken
+            res.locals.user = decodedToken
         })
     }
     next()
