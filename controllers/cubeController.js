@@ -18,7 +18,10 @@ router.post('/create', (req, res) => {
 
 router.get('/details/:cubeId', (req, res) => {
     cubeServices.getCubeWithAccessories(req.params.cubeId)
-    .then((cube) =>{res.render('details', {cube})})
+    .then((cube) =>{
+        if(req.user){cube.isOwner = cube.owner == req.user._id}
+        res.render('details', {cube})}
+        )
     .catch(err => res.render('404', {status:'404 - Page Not Found', message:`${err.message}`}))
 })
 
