@@ -7,7 +7,10 @@ router.get('/', (req, res) => {
         searchValues = {...req.query}
     }
     cubeServices.getAllCubes(searchValues)
-    .then((cubes) => {res.render('index',{cubes})})
+    .then((cubes) => {
+        if(req.user){cubes.forEach(cube => cube.isOwner = cube.owner == req.user._id)}
+        res.render('index',{cubes})
+    })
     .catch(err => {throw new Error(err.message)})
     
    

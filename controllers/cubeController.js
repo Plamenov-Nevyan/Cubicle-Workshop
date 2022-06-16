@@ -10,6 +10,7 @@ router.get('/create', (req, res) => {
     }
 })
 router.post('/create', (req, res) => {
+    req.body.owner = req.user._id
     cubeServices.saveCube(req.body)
     .then(resp => res.redirect('/'))
     .catch(err => res.render('404', {status:'400 - Bad Request', message:`${err.message}`}))
