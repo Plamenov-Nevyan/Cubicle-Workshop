@@ -1,18 +1,15 @@
 <main>
-    <a class="actionLink" href="/auth/add-avatar"><img id="addAvatarIcon" src="../static/images/camera.svg"> Add profile picture</a>`
         <div class="userInfo">
             <div class="avatar"> 
-               {{#if user.imageUrl}}
-               <img src="{{user.imageUrl}}">
-               {{else}}
                <img src="../static/images/anonymous-{{user.gender}}.jpg">
-               {{/if}}
             </div>
             <h2 id="usernamePlaceholder">{{user.username}}</h2>
             <h2>{{user.country}}</h2>
             <hr>
         </div>
+        {{#if user.cubes}}
         <h3 id="added-by">Cubes added by {{user.username}}:</h3>
+        {{/if}}
             {{#each user.cubes}}
             {{> cube}}
             {{/each}}

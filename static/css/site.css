@@ -105,6 +105,24 @@ button, main a.btn {
     color: white;
 }
 
+.commentUserPic {
+    border-radius: 50px;
+    margin-bottom: -10px;
+    height: 47px;
+    width: auto;
+}
+
+#profileRedirect {
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+#profileRedirect:hover {
+   color: greenyellow;
+   font-size: 22px;
+}
+
 .details a.btn{
     width: 26%;
 }

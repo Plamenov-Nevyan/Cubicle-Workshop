@@ -1,5 +1,6 @@
 const { Cube } = require('../models/Cube')
 const { User } = require('../models/User')
+const { Comment } = require('../models/Comment')
 
 const getAllCubes = (searchValues) => {
     if(!searchValues){
@@ -21,7 +22,30 @@ const getAllCubes = (searchValues) => {
 
 const getSpecificCube = (cubeId) =>Cube.findById(cubeId).lean()
 
-const getCubeWithAccessories = (cubeId) => Cube.findById(cubeId).populate('accessories').lean()
+const getCubeWithAccessories = (cubeId) => {
+    return Cube.findById(cubeId)
+    .populate('accessories')
+    .populate({
+        path: 'comments',
+        populate: {
+            path : 'author',
+            model: 'User'
+        }
+    })
+    .lean()
+}
+
+const postComment = async (cubeId,userId, commentData) => {
+    let [cube, newComment] = await Promise.all([
+        Cube.findById(cubeId),
+        Comment.create(commentData)
+    ])
+    newComment.author = userId
+    cube.comments.push(newComment)
+    await newComment.save()
+    cube.save()
+}
+
 
 const saveCube = async (data) => {
     let [cube, user] = await Promise.all([
@@ -62,5 +86,6 @@ exports.cubeServices = {
     getCubeWithAccessories,
     getDifficultyLevel,
     editCube,
-    deleteCube
+    deleteCube,
+    postComment
 }

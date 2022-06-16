@@ -20,9 +20,14 @@ router.get('/details/:cubeId', (req, res) => {
     cubeServices.getCubeWithAccessories(req.params.cubeId)
     .then((cube) =>{
         if(req.user){cube.isOwner = cube.owner == req.user._id}
-        res.render('details', {cube})}
+        res.render('details', {cube, user:req.user})}
         )
     .catch(err => res.render('404', {status:'404 - Page Not Found', message:`${err.message}`}))
+})
+router.post('/details/comment/:cubeId/:userId', (req, res) => {
+    cubeServices.postComment(req.params.cubeId,req.params.userId, req.body)
+    .then(() => res.redirect(`/cube/details/${req.params.cubeId}`))
+    .catch(err => res.render('404', {status:`400 - Bad Request`, message: err.message}))
 })
 
 router.get('/edit/:cubeId', (req, res) =>{

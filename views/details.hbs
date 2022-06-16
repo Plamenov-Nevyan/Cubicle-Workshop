@@ -1,18 +1,37 @@
- <main>
-      <h1>{{cube.name}}</h1>
-      <img class="cube" src="{{cube.imageUrl}}">
-      <div class="details">
-        <p><span>Description:</span>{{cube.description}}</p>
-        <p><span>Difficulty level:</span> {{cube.difficultyLevel}}</p>
-        <a class="btn" href="/">Back</a>
-        {{#if cube.isOwner}}
-        <a class="btn" href="/accessory/attach/{{cube._id}}">Attach accessory</a>
-        <a class="btn" href="/accessory/remove/{{cube._id}}" {{#unless cube.accessories}}style="display:none"{{/unless}}>Remove accessory</a>
-        {{/if}}
-        {{#each cube.accessories}}
-           {{> accessory}}
-           {{else}}
-           <h3 class="italic">This cube has no accessories yet...</h3>
-        {{/each}}
-      </div>
-    </main>
+<main>
+  <h1>{{cube.name}}</h1>
+  <img class="cube" src="{{cube.imageUrl}}">
+  <div class="details">
+    <p><span>Description:</span>{{cube.description}}</p>
+    <p><span>Difficulty level:</span> {{cube.difficultyLevel}}</p>
+    <a class="btn" href="/">Back</a>
+    {{#if cube.isOwner}}
+    <a class="btn" href="/accessory/attach/{{cube._id}}">Attach accessory</a>
+    <a class="btn" href="/accessory/remove/{{cube._id}}" {{#unless cube.accessories}}style="display:none"
+      {{/unless}}>Remove accessory</a>
+    {{/if}}
+    {{#each cube.accessories}}
+    {{> accessory}}
+    {{else}}
+    <h3 class="italic">This cube has no accessories yet...</h3>
+    {{/each}}
+    <ul>
+    {{#each cube.comments}}
+      {{> comment}}
+      {{else}}
+      <h3 class="italic">This cube has no comments yet...</h3>
+     {{/each}}
+     </ul>
+    {{#if cube.isOwner}}
+    {{else}}
+    {{#if user}}
+    <article class="new-comment">
+      <form id="commentForm" action="/cube/details/comment/{{cube._id}}/{{user._id}}" method="post">
+        <textarea name="content" placeholder="Type comment"></textarea>
+        <input id="commentBtn" type="submit" value="Add comment">
+      </form>
+    </article>
+    {{/if}}
+    {{/if}}
+  </div>
+</main>

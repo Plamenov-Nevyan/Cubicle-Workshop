@@ -34,7 +34,11 @@ const cubeSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    comments:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'Comment'
+    }]
 })
 const Cube = mongoose.model('Cube', cubeSchema)
 exports.Cube = Cube
