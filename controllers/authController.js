@@ -73,4 +73,10 @@ router.get('/my-profile', (req, res) => {
     .catch(err => res.render('404', {status: `500 - Internal Surver Error`, message : err.message}))
 })
 
+router.get('/profile/:userId', (req, res) => {
+    authServices.getUserWithCubes(req.params.userId)
+    .then((user) => res.render('profile', {user}))
+    .catch(err => res.render('404', {status: `500 - Internal Surver Error`, message : err.message}))
+})
+
 module.exports = router
