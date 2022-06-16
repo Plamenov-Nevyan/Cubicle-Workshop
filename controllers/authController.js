@@ -13,11 +13,17 @@ router.get('/login', (req, res) => {
 })
 router.post('/login', async (req, res) => {
     let responseData = await authServices.checkIfPasswordExist(req.body)
-
+    console.log(responseData);
     if(typeof responseData == `string`){return res.render('404', {status:`401 - Unauthorized`, message:`${responseData}`})}
 
     if(responseData.isAuthenticated){
-        let token = jwt.sign({username:responseData.username, _id:responseData._id}, secret, {expiresIn:'2d'})
+        let token = jwt.sign(
+            {
+            username:responseData.user.username, 
+            _id:responseData.user._id
+            }, 
+            secret, 
+            {expiresIn:'2d'})
         res.cookie(cookieName,token,{httpOnly:true})
         res.redirect('/')
     }

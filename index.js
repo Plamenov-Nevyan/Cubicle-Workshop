@@ -3,8 +3,10 @@ let routes = require('./config/routes')
 const config = require('./config/config')[env];
 const app = require('express')();
 const {databaseInit} = require('./config/mongodb')
+const isAuth = require('./middlewares/authMiddleware')
 
 require('./config/express')(app);
+app.use(isAuth)
 
 app.use(routes)
 
