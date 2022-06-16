@@ -1,4 +1,5 @@
 const { Cube } = require('../models/Cube')
+const { User } = require('../models/User')
 
 const getAllCubes = (searchValues) => {
     if(!searchValues){
@@ -22,7 +23,14 @@ const getSpecificCube = (cubeId) =>Cube.findById(cubeId).lean()
 
 const getCubeWithAccessories = (cubeId) => Cube.findById(cubeId).populate('accessories').lean()
 
-const saveCube = (data) => Cube.create(data)
+const saveCube = async (data) => {
+    let [cube, user] = await Promise.all([
+        Cube.create(data),
+        User.findById(data.owner)
+    ]) 
+    user.cubes.push(cube)
+    return user.save()
+}
 
 const getDifficultyLevel = (cubeDifLevel) => {  
 const difficultyLevels = [    

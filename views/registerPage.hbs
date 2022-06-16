@@ -1,16 +1,32 @@
-        <main>
-            <h1>Register Form</h1>
-            <div class="form">
-                <form method="POST">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username">
+<main>
+    <h1>Register Form</h1>
+    <div class="form">
+        <form method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
 
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
 
-                    <label for="repeatPassword">Re-Password</label>
-                    <input type="password" id="repeatPassword" name="repeatPassword">
-                    <input type="submit" value="Register">
-                </form>
-            </div>
-        </main>
+            <label for="repeatPassword">Re-Password</label>
+            <input type="password" id="repeatPassword" name="repeatPassword">
+            <span>Gender</span>
+            <input type="radio" name="gender" value="Male" checked>
+            <label for="male"> Male</label>
+            <input type="radio" name="gender" value="Female"> 
+            <label for="female">Female</label>
+            <p id="countryParagraph">Country(optional):</p>
+            <select id="countrySelect" name="countrySelect">
+                <option class="countryOption" value="Anynomous">None</option>
+                <option class="countryOption" value="AT">AT 🇦🇹</option>
+                <option class="countryOption" value="CH">CH 🇨🇭</option>
+                <option class="countryOption" value="BG">BG 🇧🇬</option>
+                <option class="countryOption" value="IT">IT 🇮🇹</option>
+                <option class="countryOption" value="US">US 🇺🇸</option>
+                <option class="countryOption" value="GB">GB 🇬🇧</option>
+                <option class="countryOption" value="IN">IN 🇮🇳</option>
+            </select>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</main>

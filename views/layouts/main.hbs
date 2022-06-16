@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Cubicle</title>
   <link href="/static/css/site.css" type="text/css" rel="stylesheet">
+  <link href="/static/css/profile.css" type="text/css" rel="stylesheet">
   <link rel='shortcut icon' type='image/x-icon' href='/static/images/favicon.png' />
 </head>
 
@@ -18,6 +19,7 @@
         {{#if user}}
         <li><a href="/cube/create">Add a Cube</a></li>
         <li><a href="/accessory/add">Add Accessory</a></li>
+        <li><a href="/auth/my-profile">My Profile</a></li>
         <li><a href="/auth/logout">Logout</a></li>
         {{else}}
         <li><a href="/auth/login">Login</a></li>

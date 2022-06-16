@@ -256,6 +256,19 @@ h2{
     text-align: center;
 }
 
+#countryParagraph {
+    margin-top:  35px;
+    font-weight: bolder;
+font-size: 17px;
+font-style: italic;
+text-align: center;
+padding: 10px;
+}
+
+#countrySelect {
+    margin-top: 10px;
+}
+
 .accessories .accessory{
     display: inline-block;
     background-color: #f3f3f2;

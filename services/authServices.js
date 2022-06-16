@@ -1,14 +1,20 @@
 const { User } = require('../models/User')
 const { saltRounds, secret, cookieName } = require('../config/authConstants')
-const {promisify} = require('util')
+const processCountrySelect = require('../utils/processUserCountry')
 const bcrypt = require('bcrypt')
 
 
+const getUserWithCubes = (userId) => User.findById(userId).populate('cubes').lean()
 const checkIfUserExists = async (username) => User.exists({username}).exec()
 
 const registerUser = async (userData) => {
   let hashedPass = await bcrypt.hash(userData.password, saltRounds)
-  return User.create({username:userData.username, password: hashedPass})
+  return User.create({
+    username:userData.username, 
+    password: hashedPass,
+    gender: userData.gender,
+    country: processCountrySelect(userData.countrySelect)
+})
 }
 
 const checkIfPasswordExist = async (userData) => {
@@ -29,5 +35,6 @@ const checkIfPasswordExist = async (userData) => {
 exports.authServices = {
     checkIfUserExists,
     checkIfPasswordExist,
-    registerUser
+    registerUser,
+    getUserWithCubes
 }

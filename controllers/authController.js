@@ -42,7 +42,7 @@ router.get('/register', (req, res) => {
 })
 router.post('/register', (req, res) => {
       authServices.checkIfUserExists(req.body.username)
-      .then(async(result) => {
+      .then(async (result) => {
          if(!result){
             if(req.body.password !== req.body.repeatPassword){
                 return res.render('404', {status: `401-Unauthorized`, message:`Passwords must match each other!`})
@@ -62,6 +62,15 @@ router.post('/register', (req, res) => {
 router.get('/logout', (req, res) => {
     res.clearCookie(cookieName)
     res.redirect('/')
+})
+
+router.get('/my-profile', (req, res) => {
+    authServices.getUserWithCubes(req.user._id)
+    .then((user) => {
+        user.cubes.forEach(cube => {cube.isOwner = String(cube.owner) == String(user._id)});
+        res.render('profile', {user})
+    })
+    .catch(err => res.render('404', {status: `500 - Internal Surver Error`, message : err.message}))
 })
 
 module.exports = router
