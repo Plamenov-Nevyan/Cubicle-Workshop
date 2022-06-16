@@ -28,11 +28,6 @@ img.logo {
     float: left;
 }
 
-.deleteBtnImg {
-    width: 20px;
-    height: 20px;
-}
-
 header {
     list-style-type: none;
     margin: auto;
@@ -110,23 +105,18 @@ button, main a.btn {
     color: white;
 }
 
-.deleteBtn {
-    border: none;
-    padding: 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    width: 5%;
-    margin: 12px;
-    border-radius: 4px;
-    background: crimson;
-    color: white;
+.details a.btn{
+    width: 26%;
 }
 
 button:hover {
     background-color: #0B2133;
     color: white;
     cursor: pointer;
+}
+
+a.btn:hover{
+    text-decoration: underline;
 }
 
 a {
@@ -141,6 +131,24 @@ div.details {
     width: 50%;
     background-color: #f3f3f2;
     padding: 1em;
+}
+
+.deleteBtnImg {
+    width: 20px;
+    height: 20px;
+}
+
+.deleteBtn {
+    border: none;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 5%;
+    margin: 12px;
+    border-radius: 4px;
+    background: crimson;
+    color: white;
 }
 
 span {
@@ -175,6 +183,7 @@ form label {
 
 input[type=text],
 input[type=number],
+input[type=password],
 select,
 textarea {
     width: 100%;
@@ -270,7 +279,6 @@ footer {
 
 /*Animations & Transitions
 */
-
 
 @-webkit-keyframes fadeOut {
     from {
