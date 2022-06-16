@@ -3,18 +3,22 @@ const {cubeServices} = require('../services/cubeServices')
 
 
 router.get('/create', (req, res) => {
-    res.render('create')
+    try{
+        res.render('create')
+    }catch(err){
+        res.render('404', {status:'404 - Page Not Found', message:`${err.message}`})
+    }
 })
 router.post('/create', (req, res) => {
     cubeServices.saveCube(req.body)
     .then(resp => res.redirect('/'))
-    .catch(err => {throw new Error(err.message)})
+    .catch(err => res.render('404', {status:'400 - Bad Request', message:`${err.message}`}))
 })
 
 router.get('/details/:cubeId', (req, res) => {
     cubeServices.getCubeWithAccessories(req.params.cubeId)
     .then((cube) =>{res.render('details', {cube})})
-    .catch(err => {throw new Error(err.message)})
+    .catch(err => res.render('404', {status:'404 - Page Not Found', message:`${err.message}`}))
 })
 
 router.get('/edit/:cubeId', (req, res) =>{
@@ -24,17 +28,23 @@ router.get('/edit/:cubeId', (req, res) =>{
       let [cubeDifLevel, restDifLevels] = [difLevelData[0], difLevelData[1]]
       res.render('editCube',{cube, cubeDifLevel, restDifLevels})
    })
+   .catch(err => res.render('404', {status:'404 - Page Not Found', message:`${err.message}`}))
 })
 router.post('/edit/:cubeId', (req, res) => {
     cubeServices.editCube(req.params.cubeId, req.body)
     .then(() => res.redirect(`/cube/details/${req.params.cubeId}`))
-    .catch(err => {throw new Error(err.message)})
+    .catch(err => res.render('404', {status:'400 - Bad Request', message:`${err.message}`}))
 })
 
 router.get('/delete/:cubeId', (req, res) => {
-  cubeServices.deleteCube(req.params.cubeId)
-  .then(() => res.redirect('/'))
-  .catch(err => {throw new Error(err.message)})
+ cubeServices.getSpecificCube(req.params.cubeId)
+ .then((cube) => res.render('deleteCubePage', {cube}))
+ .catch(err => res.render('404', {status:'404 - Page Not Found', message:`${err.message}`}))
+})
+router.post('/delete/:cubeId', (req, res) => {
+    cubeServices.deleteCube(req.params.cubeId)
+    .then(() => res.redirect('/'))
+    .catch(err => res.render('404', {status:'400 - Bad Request', message:`${err.message}`}))
 })
 
 module.exports = router
