@@ -8,9 +8,14 @@ const getAllCubes = (searchValues) => {
     }
     else{
         if(searchValues.search){
-            return cubesForFilter = Cube.find({
+           try{
+            return Cube.find({
                 name: {$regex: new RegExp(searchValues.search, 'i')}
             }).lean()
+           }
+           catch(err){
+            throw err
+           }
          }
          else if(searchValues.from && searchValues.to){
             return Cube.find().where('difficultyLevel').gte(searchValues.from).lte(searchValues.to).lean()

@@ -2,21 +2,19 @@ const router = require('express').Router()
 const {authServices} = require('../services/authServices')
 const jwt = require('jsonwebtoken')
 const {secret, cookieName} = require('../config/authConstants')
+const {registerMiddleware} = require('../middlewares/userValidationMiddleware')
 
 
-router.get('/login', (req, res) => {
+router.get('/login', (req, res, next) => {
     try{
         res.render('loginPage')
     }catch(err){
-        res.render('404', {status:'404 - Page Not Found', message:`${err.message}`})
+        next(error)
     }
 })
 router.post('/login', async (req, res) => {
-    let responseData = await authServices.checkIfPasswordExist(req.body)
-    console.log(responseData);
-    if(typeof responseData == `string`){return res.render('404', {status:`401 - Unauthorized`, message:`${responseData}`})}
-
-    if(responseData.isAuthenticated){
+    try{
+        let responseData = await authServices.checkIfPasswordExist(req.body)
         let token = jwt.sign(
             {
             username:responseData.user.username, 
@@ -27,56 +25,59 @@ router.post('/login', async (req, res) => {
         res.cookie(cookieName,token,{httpOnly:true})
         res.redirect('/')
     }
-    else{
-        return res.render('404', {status:`401 - Unauthorized`, message:`Password is incorrect!`})
+    catch(error){
+        res.locals.error = error.message
+        return res.render('loginPage',)
     }
 })
 
-router.get('/register', (req, res) => {
+router.get('/register', (req, res, next) => {
     try{
         res.render('registerPage')
     }catch(err){
-        res.render('404', {status:'404 - Page Not Found', message:`${err.message}`})
+        next(error)
     }
     
 })
-router.post('/register', (req, res) => {
+router.post('/register', registerMiddleware, (req, res, next) => {
       authServices.checkIfUserExists(req.body.username)
       .then(async (result) => {
          if(!result){
-            if(req.body.password !== req.body.repeatPassword){
-                return res.render('404', {status: `401-Unauthorized`, message:`Passwords must match each other!`})
-            }
             let user = await authServices.registerUser(req.body)
             let token = jwt.sign({username:user.username, _id: user._id}, secret, {expiresIn:'2d'})
             res.cookie(cookieName, token, {httpOnly:true})
             res.redirect('/')
          }
          else{
-            res.render('404', {status: `401-Unauthorized`, message:`User already exists!`})
+            res.locals.error = 'User already exists!'
+            return res.render('registerPage')
          }
       })
-      .catch(err => res.render('404', {status:'500 - Internal Server Error', message:`${err.message}`}))
+      .catch(error => next(error))
 })
 
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
+  try{  
     res.clearCookie(cookieName)
     res.redirect('/')
+}catch(error){
+    next(error)
+}
 })
 
-router.get('/my-profile', (req, res) => {
+router.get('/my-profile', (req, res, next) => {
     authServices.getUserWithCubes(req.user._id)
     .then((user) => {
         user.cubes.forEach(cube => {cube.isOwner = String(cube.owner) == String(user._id)});
         res.render('profile', {user})
     })
-    .catch(err => res.render('404', {status: `500 - Internal Surver Error`, message : err.message}))
+    .catch(error => next(error))
 })
 
-router.get('/profile/:userId', (req, res) => {
+router.get('/profile/:userId', (req, res,next) => {
     authServices.getUserWithCubes(req.params.userId)
     .then((user) => res.render('profile', {user}))
-    .catch(err => res.render('404', {status: `500 - Internal Surver Error`, message : err.message}))
+    .catch(error => next(error))
 })
 
 module.exports = router

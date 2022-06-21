@@ -21,7 +21,7 @@ const saveAccessory = async (cubeId, accessoryId) => {
     await accessory.save()
   }
   catch(err){
-      console.log(err);
+      throw err
   }
 return cube
 }

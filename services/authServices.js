@@ -21,13 +21,22 @@ const checkIfPasswordExist = async (userData) => {
     let user = await User.findOne({username: userData.username}).lean()
     if(user){
         let isAuthenticated = await bcrypt.compare(userData.password, user.password)
-        return {
-            user,
-            isAuthenticated
+        if(isAuthenticated){
+            return {
+                user,
+                isAuthenticated
+            }
+        }
+        else{
+            throw{
+                message:'Username or password is incorrect!'
+            }
         }
     } 
     else{
-        return `User does not exist!`
+        throw {
+            message : 'Username or password is incorrect!'
+        }
     }
 }
 
